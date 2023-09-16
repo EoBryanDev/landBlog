@@ -23,7 +23,7 @@ const Header: React.FC = () => {
           <ActiveLink
             className={styles.anchor}
             activeClassName={styles.active}
-            href='/posts'
+            href='/blog'
           >
             Blog
           </ActiveLink>

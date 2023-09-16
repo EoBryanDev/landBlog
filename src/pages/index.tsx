@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import styles from "../styles/home.module.scss";
+import Image from "next/image";
+
+import techsImage from "../../public/images/techs.svg";
 
 export default function Home() {
   return (
@@ -15,16 +18,52 @@ export default function Home() {
       <main className={styles.container}>
         <div className={styles.containerHeader}>
           <section className={styles.ctaText}>
-            <h1>Levando você ao próximo nível!</h1>
-            <span>
-              Uma plataforma com cursos que vão do zero até o avançado na
-              prática
-            </span>
+            <h1>Taking you to the next level</h1>
+            <span>A platform with basics to advanced courses praticals</span>
             <a>
-              <button>COMEÇAR AGORA</button>
+              <button>START NOW!</button>
             </a>
           </section>
-          <img src='/images/banner-conteudos.png' alt='conteúdos' />
+          <img src='/images/banner-conteudos.png' alt='Banner Content' />
+        </div>
+
+        <hr className={styles.divisor} />
+
+        <div className={styles.sectionContent}>
+          <section>
+            <h2>Learn how to build IOS and Android applications</h2>
+            <span>
+              You will find the modernest way to develop natives app for IOS and
+              Android
+            </span>
+          </section>
+          <img src='/images/financasApp.png' alt='Mobile Content Develop' />
+        </div>
+        <hr className={styles.divisor} />
+
+        <div className={styles.sectionContent}>
+          <img src='/images/webDev.png' alt='Web development' />
+          <section>
+            <h2>Learn how to build web systems</h2>
+            <span>
+              Build web applications, sites using the most modern and required
+              techs
+            </span>
+          </section>
+        </div>
+
+        <div className={styles.nextLevelContent}>
+          <Image src={techsImage} alt='techs' />
+          <h2>
+            More than <span className={styles.students}>15k</span> already took
+            their career to the next level
+          </h2>
+          <span>
+            And you going to miss your opportunity to be your best version?
+          </span>
+          <a href=''>
+            <button>ACCESS COURSE</button>
+          </a>
         </div>
       </main>
     </>
