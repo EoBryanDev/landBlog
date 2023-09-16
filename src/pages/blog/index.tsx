@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import styles from "./styles.module.scss";
 import thumb from "../../../public/images/thumb.png";
+import { FiChevronRight,FiChevronsRight , FiChevronLeft, FiChevronsLeft } from "react-icons/fi";
 
 const Blog = () => {
   return (
@@ -22,11 +23,30 @@ const Blog = () => {
               quality={100}
             />
             <strong>Building your first app</strong>
-            <time>
-              16 SET 2023
-            </time>
-            <p>Today we goint to build show password function in the input. Its a great feature to our forms!</p>
+            <time>16 SET 2023</time>
+            <p>
+              Today we goint to build show password function in the input. Its a
+              great feature to our forms!
+            </p>
           </Link>
+          <div className={styles.buttonNavigate}>
+            <div>
+              <button>
+                <FiChevronsLeft size={25} color="#fff" />
+              </button>
+              <button>
+                <FiChevronLeft size={25} color="#fff" />
+              </button>
+            </div>
+            <div>
+              <button>
+                <FiChevronRight size={25} color="#fff" />
+              </button>
+              <button>
+                <FiChevronsRight size={25} color="#fff" />
+              </button>
+            </div>
+          </div>
         </div>
       </main>
     </>
