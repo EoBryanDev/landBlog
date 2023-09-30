@@ -1,11 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
+import { RichText } from "prismic-dom";
 import Head from "next/head";
 import styles from "../styles/home.module.scss";
 import Image from "next/image";
+import Prismic from "@prismicio/client";
 
 import techsImage from "../../public/images/techs.svg";
+import { GetStaticProps } from "next";
+import { getPrismicClient } from "../services/prismic";
 
-export default function Home() {
+type TContent = {
+  title: string,
+  titleContent: string,
+  linkAction: string,
+  mobileTitle: string,
+  mobileContent: string,
+  mobileBanner: string,
+  webTitle: string,
+  webContent: string,
+  webBanner: string,
+}
+
+interface IProps {
+  content: TContent
+}
+
+const Home = ({content}: IProps) => {
+  console.log(content);
+  
   return (
     <>
       <Head>
@@ -18,9 +40,9 @@ export default function Home() {
       <main className={styles.container}>
         <div className={styles.containerHeader}>
           <section className={styles.ctaText}>
-            <h1>Taking you to the next level</h1>
-            <span>A platform with basics to advanced courses praticals</span>
-            <a>
+            <h1>{content.title}</h1>
+            <span>{content.titleContent}</span>
+            <a href={content.linkAction}>
               <button>START NOW!</button>
             </a>
           </section>
@@ -31,23 +53,21 @@ export default function Home() {
 
         <div className={styles.sectionContent}>
           <section>
-            <h2>Learn how to build IOS and Android applications</h2>
+            <h2>{content.mobileTitle}</h2>
             <span>
-              You will find the modernest way to develop natives app for IOS and
-              Android
+            {content.mobileContent}
             </span>
           </section>
-          <img src='/images/financasApp.png' alt='Mobile Content Develop' />
+          <img src={content.mobileBanner} alt='Mobile Content Develop' />
         </div>
         <hr className={styles.divisor} />
 
         <div className={styles.sectionContent}>
-          <img src='/images/webDev.png' alt='Web development' />
+          <img src={content.webBanner} alt='Web development' />
           <section>
-            <h2>Learn how to build web systems</h2>
+            <h2>{content.webTitle}</h2>
             <span>
-              Build web applications, sites using the most modern and required
-              techs
+            {content.webContent}
             </span>
           </section>
         </div>
@@ -69,3 +89,40 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient();
+
+  const response = await prismic.query([
+    Prismic.Predicates.at("document.type", "home"),
+  ]);
+  const {
+    title,
+    sub_title,
+    link_action,
+    mobile,
+    mobile_content,
+    mobile_banner,
+    title_web,
+    web_content,
+    web_banner,
+  } = response.results[0].data;
+  
+  const content = {
+    title: RichText.asText(title),
+    titleContent: RichText.asText(sub_title),
+    linkAction: link_action.url,
+    mobileTitle: RichText.asText(mobile),
+    mobileContent: RichText.asText(mobile_content),
+    mobileBanner: mobile_banner.url,
+    webTitle: RichText.asText(title_web),
+    webContent: RichText.asText(web_content),
+    webBanner: web_banner.url,
+  };
+  return {
+    props: { content },
+    revalidate: 60 * 60,
+  };
+};
